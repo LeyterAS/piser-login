@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Login - PISER SAC</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-color: #f5f7fa;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .banner {
+      width: 100%;
+      background-color: #004b8d;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 40px;
+      color: white;
+    }
+    .banner img {
+      height: 40px;
+    }
+    .login-box {
+      background-color: #ffffff;
+      margin-top: 60px;
+      padding: 30px;
+      border-radius: 8px;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+      color: #004b8d;
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+      color: #333;
+    }
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .btn-login {
+      width: 100%;
+      background-color: #004b8d;
+      color: white;
+      padding: 10px;
+      margin-top: 25px;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .btn-login:hover {
+      background-color: #0363c2;
+    }
+    .footer {
+      margin-top: 30px;
+      font-size: 0.85rem;
+      color: #666;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="banner" style="width: 100%; height: 60px; background-color: white; display: flex; align-items: center; padding: 0 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+  <img src="logo.jpg" alt="PISER Logo" style="height: 40px;">
+</div>
+<div style="width: 100%; background-color: #004b8d; height: 40px; display: flex; justify-content: flex-end; align-items: center; padding: 0 20px; color: white; font-weight: bold;">
+  PISER - LOGIN
+</div>
+
+  <div class="login-box">
+    <div id="mensaje" style="margin-bottom: 10px;"></div>
+    <h2>Iniciar sesión</h2>
+    <form id="loginForm">
+      <label for="dni">Usuario</label>
+      <input type="text" id="dni" name="dni" placeholder="Ingrese su usuario">
+
+      <label for="codigo">Contraseña</label>
+<div style="position: relative;">
+  <input type="password" id="codigo" name="codigo" placeholder="Ingrese su contraseña">
+  <button type="button" onclick="togglePassword()" style="position: absolute; right: 10px; top: 8px; background: none; border: none; cursor: pointer; font-size: 0.9rem; color: #004b8d;">👁️</button>
+</div>
+
+      <button type="submit" class="btn-login">Ingresar</button>
+    </form>
+</div>
+
+<div id="dashboard" style="display: none; width: 100%; max-width: 1000px; margin-top: 40px; background: #fff; border-radius: 10px; padding: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+  <header style="background-color: #004b8d; color: white; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; border-radius: 10px 10px 0 0;">
+    <h1 style="margin: 0; font-size: 1.2rem;">PISER Plataforma</h1>
+    <button onclick="cerrarSesion()" style="background: white; color: #004b8d; border: none; padding: 0.5rem 1rem; border-radius: 5px; cursor: pointer;">Cerrar sesión</button>
+  </header>
+  <nav style="margin-top: 1rem;">
+    <ul style="display: flex; gap: 2rem; list-style: none; padding: 0;">
+      <li><a href="#" style="text-decoration: none; color: #004b8d;">Inicio</a></li>
+      <li><a href="#" style="text-decoration: none; color: #004b8d;">Mi perfil</a></li>
+      <li><a href="#" style="text-decoration: none; color: #004b8d;">Configuraciones</a></li>
+    </ul>
+  </nav>
+  <main style="margin-top: 2rem;">
+    <h2 id="saludo">¡Bienvenido!</h2>
+    <p id="detalle"></p>
+  </main>
+</div>
+
+<div class="footer">
+    Mayor información al 0801-XXXX o contacto@piser.com.pe – Horario de atención: Lunes a Viernes de 8:00 a.m. a 6:00 p.m.
+  </div>
+  
+<script>
+  function togglePassword() {
+    const input = document.getElementById("codigo");
+    if (input.type === "password") {
+      input.type = "text";
+    } else {
+      input.type = "password";
+    }
+  }
+function cerrarSesion() {
+  localStorage.clear();
+  document.querySelector('.login-box').style.display = 'block';
+  document.getElementById('dashboard').style.display = 'none';
+}
+
+document.getElementById("loginForm").addEventListener("submit", function (e) {
+  e.preventDefault();
+  const dni = document.getElementById("dni").value.trim();
+  const codigo = document.getElementById("codigo").value.trim();
+
+  const usuarios = {
+    "71330197": { nombre: "Cruzado Maldonado Ángel Eduardo", codigo: "2001", cargo: "Sub. Grte. Op." },
+    "039001663": { nombre: "Cárcamo Vílchez Javier", codigo: "2002", cargo: "Jef. Log." },
+    "3860231":   { nombre: "Alburqueque Atoche Israel Alejandro", codigo: "2003", cargo: "QHS. Seg." },
+    "42509446":  { nombre: "Castillo Camacho Blanca Deivi", codigo: "2004", cargo: "R.R.H.H." },
+    "78286696":  { nombre: "Guzmán Bello Edward Hernando", codigo: "2005", cargo: "Conta." },
+    "70803055":  { nombre: "Arízaga Saldarriaga Leyter", codigo: "2006", cargo: "Ing." }
+  };
+
+  if (usuarios[dni] && usuarios[dni].codigo === codigo) {
+    localStorage.setItem('usuario', usuarios[dni].nombre);
+    localStorage.setItem('cargo', usuarios[dni].cargo);
+    document.querySelector('.login-box').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'block';
+    document.getElementById('saludo').innerText = `¡Bienvenido, ${usuarios[dni].nombre}!`;
+    document.getElementById('detalle').innerText = `Nos alegra tenerte de vuelta. Tu rol actual es: ${usuarios[dni].cargo}. ¡Esperamos que tengas un excelente día lleno de logros 🚀!`;
+  } else {
+    document.getElementById("mensaje").innerHTML = "<p style='color: red;'>Usuario o contraseña incorrectos</p>";
+  }
+});
+</script>
+
+</body>
+</html>
